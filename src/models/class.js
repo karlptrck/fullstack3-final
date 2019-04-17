@@ -20,7 +20,7 @@ export default class ClassModel extends BaseModel{
         return this.destroy(CLASS_TABLE_NAME, id, next)
     }
 
-    async findById(id, next){
+    async findClassById(id, next){
         try{
             return await this.db().get(
                     SQL `SELECT c.id, c.code, c.name, 
@@ -32,18 +32,6 @@ export default class ClassModel extends BaseModel{
             next(err)
         }
     }
-
-
-    // async create(classObj, next){
-    //     try{
-    //         return await this.db().run(
-    //                 SQL `INSERT INTO classes(code, name, teacher_id)
-    //                 VALUES(${classObj.code}, ${classObj.name}, ${classObj.teacher_id})`
-    //         )
-    //     }catch(err){
-    //         next(err)
-    //     }
-    // }
 
 }
 

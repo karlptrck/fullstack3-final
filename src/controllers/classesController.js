@@ -1,5 +1,7 @@
 
 import ClassModel from '../models/class.js'
+import error from '../error'
+
 const model = new ClassModel()
 
 export default {
@@ -16,11 +18,12 @@ export default {
     show: async (req, res, next) => {
       try {
         const classId = req.params.id * 1
-        const requestClass = await model.findById(classId, next)
+        const requestClass = await model.findClassById(classId, next)
+        
         if (requestClass !== undefined) {
           return res.send(requestClass)
         } else {
-          return res.status(404).end()
+          return res.status(404).send(error.CLASS_NOT_FOUND)
         }
       } catch (err) {
         next(err)
@@ -56,9 +59,7 @@ export default {
             }
 
             if (Object.keys(params).length === 0) {
-              res.status(200).send({
-                error: 'No data to update'
-              })
+              res.status(200).send(error.NO_DATA_TO_UPDATE)
             }
             await model.updateClass(id, params, next)
             const updated = await model.findById(id, next)
@@ -67,17 +68,28 @@ export default {
             })
 
           }else{
-            res.status(404).send({
-              errors: 'relevant resource does not exist'
-            })
+            return res.status(404).send(error.CLASS_NOT_FOUND)
           }
       }catch(err){
         next(err)
       }
     },
-    delete: (req, res, next) => {
-      res.status(200).send({
-        message: `DELETE route for comments for postID: ${req.postId}`
-      })
+    delete: async (req, res, next) => {
+      try {
+        const id = req.params.id * 1
+        const subjectClass = await model.findById(id, next)
+        if (subjectClass === null) {
+          return res.status(404).send(error.CLASS_NOT_FOUND)
+        } else {
+          const deleteClass = await model.deleteClass(id, next)
+          if (deleteClass !== undefined || deleteClass !== null) {
+            return res.status(200).send({
+              id: id
+            })
+          } 
+        }
+      } catch (err) {
+        next(err)
+      }
     }
   }

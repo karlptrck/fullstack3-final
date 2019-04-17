@@ -1,5 +1,6 @@
 const env = process.env.NODE_ENV || 'dev'
 console.log(env)
+
 const dev = {
 	app: {
 		port: 3000

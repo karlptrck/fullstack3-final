@@ -1,4 +1,3 @@
-const SQL = require('sql-template-strings')
 const getDb = require('../db').getDb
 
 /*
@@ -14,9 +13,17 @@ export default class BaseModel {
         }
     }
 
+    async findById(tableName, id, next){
+        try{
+            return await this.db().get(`SELECT * from ${tableName} WHERE id= ${id};`)
+        }catch(err){
+            next(err)
+        }
+    }
+    
     async destroy(tableName, id, next){
 		try {
-			return await this.db().run(SQL `DELETE FROM ${tableName} WHERE id=${id}`)
+			return await this.db().run(`DELETE FROM ${tableName} WHERE id=${id}`)
 		} catch (err) {
 			next(err)
 		}
