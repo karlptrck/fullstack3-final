@@ -8,16 +8,16 @@ export default class ClassModel extends BaseModel{
         return this.findAll(CLASS_TABLE_NAME, next)
     }
 
-    async createClass(params, next){
-        return this.create(CLASS_TABLE_NAME, params, next)
-    }
-
     async updateClass(id, classObj, next){
         return this.update(CLASS_TABLE_NAME, id, classObj, next)
     }
 
     async deleteClass(id, next){
         return this.destroy(CLASS_TABLE_NAME, id, next)
+    }
+
+    async createClass(params, next){
+        return this.create(CLASS_TABLE_NAME, params, next)
     }
 
     async findClassById(id, next){

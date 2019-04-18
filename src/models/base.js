@@ -61,7 +61,7 @@ export default class BaseModel {
                 return '?'})
                 .join(',')
 
-            let sql = `UPDATE ${tableName} SET (${columnsql}) = (${values}) WHERE id='${id}'`
+            let sql = `UPDATE ${tableName} SET (${columnsql}) = (${values}) WHERE id='${id}';`
             const updatedstmt = await this.db().prepare(sql)
             return await updatedstmt.run(cvalues)
         }catch(err){
