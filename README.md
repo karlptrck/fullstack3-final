@@ -91,3 +91,18 @@ Required Field : student_id
 ```
 
 DELETE '/api/classes/:class_id/students/:id' deletes a single enrollmentrecord for a student given class id and student id
+
+## Error Codes
+
+| Code  | Message |
+| ------------- | ------------- |
+| 10  | Class does not exist.  |
+| 20  | Teacher does not exist. |
+| 21  | Unable to delete teacher with active classes. |
+| 30  | Student does not exist. |
+| 31  | Invalid request parameter.  |
+| 100  | No data to update.  |
+| 101 | Missing required fields.  |
+| 102  | Invalid request fields.  |
+| 110 | Invalid ID. Must be a number. |
+
