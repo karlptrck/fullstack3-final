@@ -22,4 +22,16 @@ export default class StudentModel extends BaseModel{
     async deleteStudent(id, next){
         return this.destroy(STUDENTS_TABLE_NAME, id, next)
     }
+
+    async getAllClassesByStudentId(id, next){
+        try{
+            return await this.db().all(
+                `SELECT * FROM classes WHERE id 
+                IN (SELECT class_id FROM student_classes 
+                WHERE student_id = ${id});`
+            )
+        }catch(err){
+            next(err)
+        }
+    }
 }

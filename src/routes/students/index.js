@@ -4,6 +4,7 @@ import studentsController from '../../controllers/studentsController'
 
 studentRoutes.get('/', studentsController.list)
 studentRoutes.get('/:id', studentsController.show)
+studentRoutes.get('/:id/classes', studentsController.classes)
 studentRoutes.post('/', studentsController.create)
 studentRoutes.put('/:id', studentsController.update)
 studentRoutes.delete('/:id', studentsController.delete)

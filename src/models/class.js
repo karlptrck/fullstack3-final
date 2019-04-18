@@ -33,5 +33,37 @@ export default class ClassModel extends BaseModel{
         }
     }
 
+    async getEnrolledStudentsByClassId(classId, next){
+        try{
+            return await this.db().all(
+                SQL `SELECT id, first_name as firstname, last_name as lastname 
+                FROM students WHERE id IN (SELECT student_id FROM student_classes 
+                WHERE class_id = ${classId});`
+            )
+        }catch(err){
+            next(err)
+        }
+    }
+
+    async enrollStudent(classId, studentId, next){
+        try{
+            return await this.db().run(
+                SQL `INSERT INTO student_classes(class_id, student_id)
+                VALUES(${classId}, ${studentId});`
+            )
+        }catch(err){
+            next(err)
+        }
+    }
+
+    async removeStudent(classId, studentId, next){
+        try {
+            return await this.db().run(`DELETE FROM student_classes 
+                WHERE class_id=${classId} AND student_id=${studentId}`)
+		} catch (err) {
+			next(err)
+		}
+    }
+
 }
 

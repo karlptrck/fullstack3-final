@@ -47,12 +47,27 @@ export default {
         next(err)
       }
     },
+    classes: async (req, res, next) => {
+      try {
+        const studentId = req.params.id * 1
+        const requestStudent = await model.findStudentById(studentId, next)
+        
+        if (requestStudent !== undefined) {
+          const classes = await model.getAllClassesByStudentId(studentId, next)
+          return res.send(JSON.stringify(classes))
+        } else {
+          return res.status(404).send(error.STUDENT_NOT_FOUND)
+        }
+      } catch (err) {
+        next(err)
+      }
+    },
     update: async (req, res, next) => {
       try{
           const id = req.params.id * 1
           const updateStudent = await model.findStudentById(id, next)
 
-          if(updateStudent !== null){
+          if(updateStudent !== undefined){
             const params = {
               ...req.body
             }
@@ -77,7 +92,7 @@ export default {
       try {
         const id = req.params.id * 1
         const subjectStudent = await model.findStudentById(id, next)
-        if (subjectStudent === null) {
+        if (subjectStudent === undefined) {
           return res.status(404).send(error.STUDENT_NOT_FOUND)
         } else {
           const deleteStudent = await model.deleteStudent(id, next)
