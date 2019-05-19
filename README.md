@@ -1,6 +1,6 @@
 # fullstack3-final
 
-Full-stack final project by Karl Patrick Camota
+Simple API built on NodeJS and SQlite Database
 
 ## Getting Started
 
