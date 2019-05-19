@@ -1,6 +1,6 @@
 # fullstack3-final
 
-Simple API built on NodeJS and SQlite Database
+Simple API built on NodeJS and SQLite Database
 
 ## Getting Started
 
